@@ -60,6 +60,7 @@ prepare() {
   # Rock 4D patches
   git apply ../0004-net-phy-realtek-Reset-after-clock-enable.patch
   git apply ../0005-arm64-dts-rockchip-use-MAC-TX-delay-for-ROCK-4D.patch
+  git apply ../0006-Add-Rockchip-RK3576-PWM-Support-Through-MFPWM.patch
 
   cat "${srcdir}/config" > ./.config
 }
