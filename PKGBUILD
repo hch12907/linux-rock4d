@@ -8,7 +8,7 @@ pkgbase=linux-rock4d
 _srcname=linux-7.0
 _kernelname=${pkgbase#linux}
 _desc="with patches for Radxa Rock 4D"
-pkgver=7.0.10
+pkgver=7.0.11
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -22,22 +22,18 @@ source=("https://www.kernel.org/pub/linux/kernel/v7.x/${_srcname}.tar.xz"
         '0003-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch'
         '0004-net-phy-realtek-Reset-after-clock-enable.patch'
         '0005-arm64-dts-rockchip-use-MAC-TX-delay-for-ROCK-4D.patch'
+        '0006-Add-Rockchip-RK3576-PWM-Support-Through-MFPWM.patch'
         'config'
-        'generate_chromebook_its.sh'
-        'kernel.keyblock'
-        'kernel_data_key.vbprivk'
         'linux.preset')
 md5sums=('1d35f79af3a784f986e4c3a154c0ecf5'
-         '7b17138476e47c0ba26dfec2cca9b395'
+         'a3e8736bfcfc91cff30949815238e345'
          'c064a0a49f4ed7d487d482ca73c75178'
          '416b7c6ef37cc0edb6cb67cf618360f5'
          'e3252a71f1f38f69799b0af9ad11ab8a'
          '5d2210119424a56c6fcb877534b2eedf'
          '42d91c10e59d9b120bb4963e6aa45c89'
-         '3dc15f571a6d8b2394224ad38dbc43a8'
-         '7c97cf141750ad810235b1ad06eb9f75'
-         '61c5ff73c136ed07a7aadbf58db3d96a'
-         '584777ae88bce2c5659960151b64c7d8'
+         '75d50394c5805965c1e20a25dfb79bc9'
+         '34396dad8ea139149f5cc668f0deda91'
          '33ba82001fca579d43172a6db25d6aca')
 
 prepare() {
