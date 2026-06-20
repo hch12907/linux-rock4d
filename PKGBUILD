@@ -5,35 +5,29 @@
 buildarch=8
 
 pkgbase=linux-rock4d
-_srcname=linux-7.0
+_srcname=linux-7.1
 _kernelname=${pkgbase#linux}
 _desc="with patches for Radxa Rock 4D"
-pkgver=7.0.11
+pkgver=7.1.1
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL-2.0-only')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc' 'python')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'dtc' 'python')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v7.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v7.x/patch-${pkgver}.xz"
-        '0001-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch'
-        '0002-pps-Compatibility-hack-should-be-X86-specific.patch'
-        '0003-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch'
-        '0004-net-phy-realtek-Reset-after-clock-enable.patch'
-        '0005-arm64-dts-rockchip-use-MAC-TX-delay-for-ROCK-4D.patch'
-        '0006-Add-Rockchip-RK3576-PWM-Support-Through-MFPWM.patch'
+        '0001-net-phy-realtek-Reset-after-clock-enable.patch'
+        '0002-arm64-dts-rockchip-use-MAC-TX-delay-for-ROCK-4D.patch'
+        '0003-Add-Rockchip-RK3576-PWM-Support-Through-MFPWM.patch'
         'config'
         'linux.preset')
-md5sums=('1d35f79af3a784f986e4c3a154c0ecf5'
-         'a3e8736bfcfc91cff30949815238e345'
-         'c064a0a49f4ed7d487d482ca73c75178'
-         '416b7c6ef37cc0edb6cb67cf618360f5'
-         'e3252a71f1f38f69799b0af9ad11ab8a'
+md5sums=('b6b169bbd9c9c19857ad16db2ddf8def'
+         '8180c4b3da5b2c8b89aebadeea70d9a1'
          '5d2210119424a56c6fcb877534b2eedf'
          '42d91c10e59d9b120bb4963e6aa45c89'
          '75d50394c5805965c1e20a25dfb79bc9'
-         '34396dad8ea139149f5cc668f0deda91'
+         '729603e879b149462e6a5b38d69da7ec'
          '33ba82001fca579d43172a6db25d6aca')
 
 prepare() {
@@ -43,20 +37,18 @@ prepare() {
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
+  # prevent some git apply silliness
+  git init
+
   # add upstream patch
   if [[ -f ../patch-${pkgver} ]]; then
     git apply --whitespace=nowarn ../patch-${pkgver}
   fi
 
-  # ALARM patches
-  git apply ../0001-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch
-  git apply ../0002-pps-Compatibility-hack-should-be-X86-specific.patch
-  git apply ../0003-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch
-
   # Rock 4D patches
-  git apply ../0004-net-phy-realtek-Reset-after-clock-enable.patch
-  git apply ../0005-arm64-dts-rockchip-use-MAC-TX-delay-for-ROCK-4D.patch
-  git apply ../0006-Add-Rockchip-RK3576-PWM-Support-Through-MFPWM.patch
+  git apply ../0001-net-phy-realtek-Reset-after-clock-enable.patch
+  git apply ../0002-arm64-dts-rockchip-use-MAC-TX-delay-for-ROCK-4D.patch
+  git apply ../0003-Add-Rockchip-RK3576-PWM-Support-Through-MFPWM.patch
 
   cat "${srcdir}/config" > ./.config
 }
